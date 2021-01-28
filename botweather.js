@@ -31,7 +31,6 @@ const bot = new TelegramBot(token, {
 });
 
 
-
 //endpoint para consulta das condições em open weather map
 const climaEndPoint = (cidade) => (
   `http://api.openweathermap.org/data/2.5/weather?q=${cidade}&units=metric&&appid=${appID}&lang=pt`
@@ -64,10 +63,11 @@ const template = (name, main, weather, wind, clouds, coord, sys, timezone, dt) =
 🕖 Timezone: <b>GMT ${Number(timezone / 60 / 60)}</b> 
 
 <b>Obrigado por consultar o Galo do Tempo 🐓</b>
-Para nova consulta use <b>/tempo</b> seguido do nome da cidade.
+Para nova consulta use <b>/clima</b> seguido do nome da cidade.
 `
 );
 
+//conversão de hora UNIX
 const convertDt = (dt) => {
   const time = dt
   const horaUnix = (time * 1000)
@@ -97,7 +97,7 @@ bot.onText(/\/start/, (msg) => {
   );
 });
 
-//quando o bot recebe texto que comece com '/tempo' ele inicia uma função com msg e match
+//quando o bot recebe texto que comece com '/clima' ele inicia uma função com msg e match
 bot.onText(/\/clima/, (msg, match) => {
   const chatId = msg.chat.id;
 
@@ -119,9 +119,9 @@ bot.onText(/\/clima/, (msg, match) => {
   buscaCondicoes(chatId, cidade);
 });
 
-//aqui ele vai chamar um get no axios para buscar e receber a previsão em json.
-//É possível ver quais informações estão disponíveis no json.
-//Eu usarei name, main, weather, wind e clouds.
+//aqui ele vai chamar um get no axios para buscar e receber a previsão em 
+//json. Eu usarei name, main, weather, wind, clouds, coord, sys, timezone e 
+//dt.
 const buscaCondicoes = (chatId, cidade) => {
   const endpoint = climaEndPoint(cidade);
   axios.get(endpoint).then((resp) => {
@@ -137,8 +137,7 @@ const buscaCondicoes = (chatId, cidade) => {
       dt
     } = resp.data;
     const re = resp.data
-    //console.log(resp.data)
-
+    
     //se tiver sucesso na busca ele vai retornar uma mensagem no nosso chat 
     //com nosso template contendo as informações que buscamos no json;
     bot.sendMessage(
@@ -164,7 +163,7 @@ const buscaCondicoes = (chatId, cidade) => {
 
 //PREVISÃO
 
-//quando o bot recebe texto que comece com '/tempo' ele inicia uma função com msg e match
+//quando o bot recebe texto que comece com '/prev' ele inicia uma função com msg e match
 bot.onText(/\/prev/, (msg, match) => {
   const chatId = msg.chat.id;
 
@@ -205,6 +204,11 @@ const buscaCoord = (chatId, cidade) => {
   });
 }
 
+//este é o endpoint onde insiro lat, lon e api key.
+const prevEndPoint = (lat, lon) => (
+  `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&units=metric&lang=pt&appid=${prevToken}`
+);
+
 //aqui criei um template para a a previsão de 7 dias.
 const templatePrev = (day0, diaPT0, day1, diaPT1, day2, diaPT2, day3, diaPT3, day4, diaPT4, day5, diaPT5, day6, diaPT6, cidadeFormatada) => (
 
@@ -244,10 +248,7 @@ Para consultar a previsão para 7 dias use <b>/clima</b> e a cidade desejada.
 `
 );
 
-//este é o endpoint onde insiro lat, lon e api key.
-const prevEndPoint = (lat, lon) => (
-  `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&units=metric&lang=pt&appid=${prevToken}`
-);
+
 
 //aqui faço a consulta e recebo um json com a previsão.
 const buscaPrev = (chatId, lat, lon, cidadeFormatada) => {
