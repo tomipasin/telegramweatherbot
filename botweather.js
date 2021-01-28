@@ -67,6 +67,7 @@ Para nova consulta use <b>/clima</b> seguido do nome da cidade.
 `
 );
 
+
 //conversão de hora UNIX
 const convertDt = (dt) => {
   const time = dt
