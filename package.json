@@ -1,0 +1,28 @@
+{
+  "name": "botweather",
+  "version": "1.0.0",
+  "description": "Bot para Telegram",
+  "main": "botweather.js",
+  "scripts": {
+    "start": "nodemon botweather.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tomi Pasin",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^8.2.0",
+    "leaflet": "^1.7.1",
+    "node-telegram-bot-api": "^0.51.0",
+    "nodemon": "^2.0.7",
+    "react-leaflet": "^3.0.5",
+    "react-select": "^4.0.2",
+    "telegraf": "^4.0.1",
+    "telegraf-callback-data": "^0.1.2",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/react-leaflet": "^2.5.2",
+    "@types/react-select": "^4.0.3"
+  }
+}
