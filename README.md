@@ -68,6 +68,21 @@ Crio uma nova URL com os dados de latitude e longitude.
 
 <img src="https://tomipasin.com/galo/10.png"/>
 
+Faço a chamada que retorna um JSON. Com ele em mãos é só extrair os dados que desejo inserir na mensagem de retorno. 
+Tinha uma forma mais "clean" de escrever esse código: sim mas esse é um passo para a versão 2 ;-)
+
+<img src="https://tomipasin.com/galo/11.png"/>
+
+Depois de obter as  informações o processo é o mesmo - responder usando um template.
+
+<img src="https://tomipasin.com/galo/12.png"/>
+
+Por último criei uma mensagem de ajuda que o bot vai exibir ao ser usado o comando /help
+
+<img src="https://tomipasin.com/galo/13.png"/>
+
+
+
 ## Meta
 
 Tomi Pasin – [@tomipasin](https://twitter.com/tomipasin) – tomipasin@gmail.com
