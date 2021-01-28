@@ -1,78 +1,93 @@
-# Product Name
-> Short blurb about what your product does.
+# Galo do Tempo - bot para previsão do tempo no Telegram
+> Bot rodando em nodeJS capaz de prover as condições atuais e também previsão para sete dias em uma cidade.
+Usei a api do <a href="https://github.com/yagop/node-telegram-bot-api#nodejs-telegram-bot-api">node-telegram-bot</a> para consumir dados de <a href="https://openweathermap.org/api">openweathermap.com</a>. 
 
-[![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![Downloads Stats][npm-downloads]][npm-url]
+<hr/>
 
-One to two paragraph statement about your product and what it does.
+<img src="https://tomipasin.com/galo/galo1.png" style="width: 680px"/>
 
-![](header.png)
+<hr/>
 
-## Installation
+## Como usar?
 
-OS X & Linux:
+Muito simples: no telegram busque por @galodotempoptbot e siga as instruções.
 
-```sh
-npm install my-crazy-module --save
-```
 
-Windows:
+## Como testar?
 
-```sh
-edit autoexec.bat
-```
+É necessaŕio criar os tokens para utlizar no Bot e os inserir em um arquivo .env:
 
-## Usage example
+<img src="https://tomipasin.com/galo/1.png"/>
 
-A few motivating and useful examples of how your product can be used. Spice this up with code blocks and potentially more screenshots.
+O primeiro é criado no próprio Telegram por meio do @botfather.
+Os outros dois são criados no <a href="https://openweathermap.org/api">openweathermap.com</a>.
 
-_For more examples and usage, please refer to the [Wiki][wiki]._
+Vamos usar duas dependências, que serão instalados por npm:
+<img src="https://tomipasin.com/galo/2.png"/>
 
-## Development setup
-
-Describe how to install all development dependencies and how to run an automated test-suite of some kind. Potentially do this for multiple platforms.
+Basta executar o comando abaixo e todas as dependências que estão em package.json serão instaladas:
 
 ```sh
-make install
-npm test
+npm install
 ```
+### Condições atuais: 
 
-## Release History
+Para inicializar o bot vamos rodar este código que também vai determinar a URL para consulta das condições atuais:
 
-* 0.2.1
-    * CHANGE: Update docs (module code remains unchanged)
-* 0.2.0
-    * CHANGE: Remove `setDefaultXYZ()`
-    * ADD: Add `init()`
-* 0.1.1
-    * FIX: Crash when calling `baz()` (Thanks @GenerousContributorName!)
-* 0.1.0
-    * The first proper release
-    * CHANGE: Rename `foo()` to `bar()`
-* 0.0.1
-    * Work in progress
+<img src="https://tomipasin.com/galo/3.png"/>
+
+Criei um template para as mensagens de retorno: 
+
+<img src="https://tomipasin.com/galo/4.png"/>
+
+Data e hora são informadas no padrão UNIX então temos um código para coverter a hora que será exibida em "Última atualização":
+
+<img src="https://tomipasin.com/galo/5.png"/>
+
+Quando o Bot recebe o comando /start na inicialização ele retorna instruções ao usuário:
+
+<img src="https://tomipasin.com/galo/6.png"/>
+
+Ao receber o comando /clima seguido de um nome de cidade o processo é iniciado para (1) formatar o nome da cidade para pesquisa, (2) verificar se foi informado um nome de cidade e se não foi mostrar uma mensagem de instrução e (3) chamar a função que fará a busca.
+
+<img src="https://tomipasin.com/galo/7.png"/>
+
+O código é executado fazendo a busca e retornando um JSON com dados. Destes usarei alguns e retornarei uma mensagem para o usuário como template criado.
+
+<img src="https://tomipasin.com/galo/8.png"/>
+
+### Previsão de 7 dias:
+O processo de obtenção dos dados de previsão não é feito pelo nome da cidade mas por coordenadas geográficas, de forma que o processo é ligeiramente diferente.
+
+O processo incia com o comando <strong>/prev</strong> que vai formatar o input e verificar se foi informado ou se a cidade existe. 
+Em caso afirmativo ele fará a busca por coordenadas daquele local.
+
+<img src="https://tomipasin.com/galo/9.png"/>
+
+Crio uma nova URL com os dados de latitude e longitude.
+
+<img src="https://tomipasin.com/galo/10.png"/>
+
+Faço a chamada que retorna um JSON. Com ele em mãos é só extrair os dados que desejo inserir na mensagem de retorno. 
+Tinha uma forma mais "clean" de escrever esse código: sim mas esse é um passo para a versão 2 ;-)
+
+<img src="https://tomipasin.com/galo/11.png"/>
+
+Depois de obter as  informações o processo é o mesmo - responder usando um template.
+
+<img src="https://tomipasin.com/galo/12.png"/>
+
+Por último criei uma mensagem de ajuda que o bot vai exibir ao ser usado o comando /help
+
+<img src="https://tomipasin.com/galo/13.png"/>
+
+
+## Imagens:
+<img src="https://tomipasin.com/galo/galo2.png" />
+<hr/>
+<img src="https://tomipasin.com/galo/galo3.png" />
 
 ## Meta
 
-Your Name – [@YourTwitter](https://twitter.com/dbader_org) – YourEmail@example.com
-
-Distributed under the XYZ license. See ``LICENSE`` for more information.
-
-[https://github.com/yourname/github-link](https://github.com/dbader/)
-
-## Contributing
-
-1. Fork it (<https://github.com/yourname/yourproject/fork>)
-2. Create your feature branch (`git checkout -b feature/fooBar`)
-3. Commit your changes (`git commit -am 'Add some fooBar'`)
-4. Push to the branch (`git push origin feature/fooBar`)
-5. Create a new Pull Request
-
-<!-- Markdown link & img dfn's -->
-[npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/datadog-metrics
-[npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square
-[travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
-[wiki]: https://github.com/yourname/yourproject/wiki
+Tomi Pasin – [@tomipasin](https://twitter.com/tomipasin) – tomipasin@gmail.com
+>>>>>>> b94008d6d371a5f5731eae8e0181cc8b62ea9768
