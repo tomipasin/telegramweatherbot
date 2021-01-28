@@ -90,4 +90,3 @@ Por último criei uma mensagem de ajuda que o bot vai exibir ao ser usado o coma
 ## Meta
 
 Tomi Pasin – [@tomipasin](https://twitter.com/tomipasin) – tomipasin@gmail.com
->>>>>>> b94008d6d371a5f5731eae8e0181cc8b62ea9768
