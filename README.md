@@ -25,11 +25,13 @@ Os outros dois são criados no <a href="https://openweathermap.org/api">openweat
 Vamos usar duas dependências, que serão instalados por npm:
 <img src="https://tomipasin.com/galo/2.png"/>
 
-Basta executar:
+Basta executar o comando abaixo e todas as dependências que estão em package.json serão instaladas:
 
 ```sh
 npm install
 ```
+### Condições atuais: 
+
 Para inicializar o bot vamos rodar este código que também vai determinar a URL para consulta das condições atuais:
 
 <img src="https://tomipasin.com/galo/3.png"/>
@@ -50,9 +52,21 @@ Ao receber o comando /clima seguido de um nome de cidade o processo é iniciado 
 
 <img src="https://tomipasin.com/galo/7.png"/>
 
+O código é executado fazendo a busca e retornando um JSON com dados. Destes usarei alguns e retornarei uma mensagem para o usuário como template criado.
 
+<img src="https://tomipasin.com/galo/8.png"/>
 
+### Previsão de 7 dias:
+O processo de obtenção dos dados de previsão não é feito pelo nome da cidade mas por coordenadas geográficas, de forma que o processo é ligeiramente diferente.
 
+O processo incia com o comando <strong>/prev</strong> que vai formatar o input e verificar se foi informado ou se a cidade existe. 
+Em caso afirmativo ele fará a busca por coordenadas daquele local.
+
+<img src="https://tomipasin.com/galo/9.png"/>
+
+Crio uma nova URL com os dados de latitude e longitude.
+
+<img src="https://tomipasin.com/galo/10.png"/>
 
 ## Meta
 
