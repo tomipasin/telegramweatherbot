@@ -82,12 +82,11 @@ Por último criei uma mensagem de ajuda que o bot vai exibir ao ser usado o coma
 <img src="https://tomipasin.com/galo/13.png"/>
 
 
-
-## Meta
-
-Tomi Pasin – [@tomipasin](https://twitter.com/tomipasin) – tomipasin@gmail.com
-
 ## Imagens:
 <img src="https://tomipasin.com/galo/galo2.png" />
 <hr/>
 <img src="https://tomipasin.com/galo/galo3.png" />
+
+## Meta
+
+Tomi Pasin – [@tomipasin](https://twitter.com/tomipasin) – tomipasin@gmail.com
