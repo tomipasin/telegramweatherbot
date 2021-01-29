@@ -79,9 +79,10 @@ const convertDt = (dt) => {
 //quando o bot recebe o texto '/start' exibe uma mensagem inicial ao usuário:
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
+  const nome = msg.chat.first_name
   bot.sendMessage(
     chatId,
-    `Eu sou o <b>Galo do Tempo</b> 🐓.
+    `Oi, ${nome}! Eu sou o <b>Galo do Tempo</b> 🐓.
      
      ⛅️ Para consultar as condições do clima em uma cidade basta usar o comando: <b>/clima</b> seguido da <b>cidade</b> 
      ➡️ Exemplo: /clima Lisboa 
@@ -100,18 +101,38 @@ bot.onText(/\/start/, (msg) => {
 //quando o bot recebe texto que comece com '/clima' ele inicia uma função com msg e match
 bot.onText(/\/clima/, (msg, match) => {
   const chatId = msg.chat.id;
-
+  const nome = msg.chat.first_name
   //tira a expressão /tempo e insere __ no lugar dos espaços.
-  const cidadeBruto = match.input.slice(7)
-  const regex2 = /(\s)/g
-  const cidade = cidadeBruto.replace(regex2, '%20')
+  let inputMsg = match.input;
+  let cidadeBruto = inputMsg.slice(7)
+  let removeAcento = RemoveAccents(cidadeBruto);
 
+  //função para remover acentos:
+  function RemoveAccents(strAccents) {
+    var strAccents = strAccents.split('');
+    var strAccentsOut = new Array();
+    var strAccentsLen = strAccents.length;
+    var accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+    var accentsOut = "AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz";
+    for (var y = 0; y < strAccentsLen; y++) {
+      if (accents.indexOf(strAccents[y]) != -1) {
+        strAccentsOut[y] = accentsOut.substr(accents.indexOf(strAccents[y]), 1);
+      } else
+        strAccentsOut[y] = strAccents[y];
+    }
+    strAccentsOut = strAccentsOut.join('');
+    return strAccentsOut;
+  }
+
+  const regex2 = /(\s)/g
+  let cidade = removeAcento.replace(regex2, '%20')
+  console.log(`Sem acentos: ${cidade}`)
 
   //se não conseguir encontrar a cidade ele retorna um erro e para tudo.
-  if (cidade === undefined) {
+  if (!cidade || cidade === undefined) {
     bot.sendMessage(
       chatId,
-      `Digite /clima seguido da cidade que deseja.`
+      `Não achei essa cidade, ${nome}. Por favor digita /clima seguido da cidade que deseja.`
     );
     return;
   }
@@ -137,7 +158,7 @@ const buscaCondicoes = (chatId, cidade) => {
       dt
     } = resp.data;
     const re = resp.data
-    
+
     //se tiver sucesso na busca ele vai retornar uma mensagem no nosso chat 
     //com nosso template contendo as informações que buscamos no json;
     bot.sendMessage(
@@ -171,7 +192,7 @@ bot.onText(/\/prev/, (msg, match) => {
   const cidadeBruto = match.input.slice(6)
   const regex2 = /(\s)/g
   const cidade = cidadeBruto.replace(regex2, '%20')
-  
+
   //se não for informada ou se não conseguir encontrar a cidade ele retorna um erro e para tudo.
   if (!cidade || cidade === undefined) {
     bot.sendMessage(
@@ -335,4 +356,27 @@ bot.onText(/\/help/, (msg) => {
   }
   );
 });
+
+
+/* bot.on('message', (msg) => {
+  const chatId = msg.chat.id;
+  const nome = msg.from.language_code
+
+  // send a message to the chat acknowledging receipt of their message
+  bot.sendMessage(chatId, `Oi, ${msg}`);
+  
+});
+ */
+
+bot.onText(/\/st/, (msg) => {
+
+
+  bot.sendMessage(msg.chat.id, "Welcome", {
+    "reply_markup": {
+      "keyboard": [["/start", "/clima"], ["Keyboard"], ["I'm robot"]]
+    }
+  });
+
+});
+
 
