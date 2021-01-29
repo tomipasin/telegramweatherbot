@@ -124,6 +124,7 @@ bot.onText(/\/clima/, (msg, match) => {
     return strAccentsOut;
   }
 
+  
   const regex2 = /(\s)/g
   let cidade = removeAcento.replace(regex2, '%20')
   console.log(`Sem acentos: ${cidade}`)
