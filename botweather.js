@@ -52,7 +52,7 @@ const template = (name, main, weather, wind, clouds, coord, sys, timezone, dt) =
 
 🎈 Pressão: <b>${main.pressure} hPa</b>
 💦 Humidade: <b>${main.humidity} %</b>
-🌬 Vento: <b>${wind.speed} meter/sec</b>
+🌬 Vento: <b>${wind.speed * 3.6} Km/h</b>
 ☁️ Cobertura de Nuvens: <b>${clouds.all} %</b>
 
 🌎 Coordenadas: 
