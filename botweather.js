@@ -25,7 +25,7 @@ const token = process.env.BOT_TOKEN;
 const appID = process.env.WEATHER_TOKEN;
 const prevToken = process.env.PREV_TOKEN;
 let latitude;
-let longitude/
+let longitude;
 
 //inicialização do bot
 const bot = new TelegramBot(token, {
