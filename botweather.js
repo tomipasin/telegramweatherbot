@@ -376,6 +376,11 @@ bot.onText(/\/st/, (msg) => {
       "keyboard": [["/start", "/clima"], ["Keyboard"], ["I'm robot"]]
     }
   });
+  
+  bot.on('location', (msg) => {
+  console.log(msg.location.latitude);
+  console.log(msg.location.longitude);
+});
 
 });
 
