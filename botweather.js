@@ -89,6 +89,8 @@ const convertDt = (dt) => {
 
 //quando o bot recebe o texto '/start' exibe uma mensagem inicial ao usuário:
 bot.onText(/\/start/, (msg) => {
+    var latitude = msg.location.latitude;
+  var longitude = msg.location.longitude;
   const chatId = msg.chat.id;
   const nome = msg.chat.first_name
   bot.sendMessage(
@@ -102,6 +104,8 @@ bot.onText(/\/start/, (msg) => {
      ➡️ Exemplo: /prev Porto 
  
      🆘 Se precisar digite <b>/help</b> a qualquer momento. 
+     
+      Suas coordenadas são ${latitude} / ${longitude}
       
   `, {
     parse_mode: "HTML"
@@ -111,8 +115,8 @@ bot.onText(/\/start/, (msg) => {
 
 //quando o bot recebe texto que comece com '/clima' ele inicia uma função com msg e match
 bot.onText(/\/clima/, (msg, match) => {
-  var latitude = msg.location.latitude;
-  var longitude = msg.location.longitude;
+ // var latitude = msg.location.latitude;
+ // var longitude = msg.location.longitude;
   const chatId = msg.chat.id;
   const nome = msg.chat.first_name
   //tira a expressão /tempo e insere __ no lugar dos espaços.
@@ -145,7 +149,7 @@ bot.onText(/\/clima/, (msg, match) => {
   if (!cidade || cidade === undefined) {
     bot.sendMessage(
       chatId,
-      `Não achei essa cidade, ${nome}. Por favor digita /clima seguido da cidade que deseja. Suas coordenadas são ${latitude} / ${longitude}`
+      `Não achei essa cidade, ${nome}. Por favor digita /clima seguido da cidade que deseja.`
     );
     return;
   }
