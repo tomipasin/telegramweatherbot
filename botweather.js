@@ -89,8 +89,8 @@ const convertDt = (dt) => {
 
 //quando o bot recebe o texto '/start' exibe uma mensagem inicial ao usuário:
 bot.onText(/\/start/, (msg) => {
-    var latitude = msg.location.latitude;
-  var longitude = msg.location.longitude;
+  var loc = msg.chat.location;
+  //var longitude = msg.location.longitude;
   const chatId = msg.chat.id;
   const nome = msg.chat.first_name
   bot.sendMessage(
@@ -105,7 +105,7 @@ bot.onText(/\/start/, (msg) => {
  
      🆘 Se precisar digite <b>/help</b> a qualquer momento. 
      
-      Suas coordenadas são ${latitude} / ${longitude}
+      Suas coordenadas são ${loc}
       
   `, {
     parse_mode: "HTML"
