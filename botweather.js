@@ -4,7 +4,7 @@ process.env.NTBA_FIX_319 = 1;
 require('dotenv').config()
 
 const http = require('http');
-const hostname = '0.0.0.0';
+//const hostname = '0.0.0.0';
 const port = process.env.PORT;
 const server = http.createServer((req, res) => {
   res.statusCode = 200;
