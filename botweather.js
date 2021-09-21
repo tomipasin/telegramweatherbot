@@ -24,18 +24,19 @@ const axios = require('axios');
 const token = process.env.BOT_TOKEN;
 const appID = process.env.WEATHER_TOKEN;
 const prevToken = process.env.PREV_TOKEN;
-let latitude;
-let longitude;
+
 
 //inicialização do bot
 const bot = new TelegramBot(token, {
   polling: true
 });
 
-  bot.onText('Location', (msg) => {
-  latitude = msg.Location.latitude;
-  longitude = msg.Location.longitude;
+/*
+  bot.on('location', (msg) => {
+  latitude = msg.location.latitude;
+  longitude = msg.location.longitude;
 });
+*/
 
 //endpoint para consulta das condições em open weather map
 const climaEndPoint = (cidade) => (
@@ -110,6 +111,8 @@ bot.onText(/\/start/, (msg) => {
 
 //quando o bot recebe texto que comece com '/clima' ele inicia uma função com msg e match
 bot.onText(/\/clima/, (msg, match) => {
+  var latitude = msg.location.latitude;
+  var longitude = msg.location.longitude;
   const chatId = msg.chat.id;
   const nome = msg.chat.first_name
   //tira a expressão /tempo e insere __ no lugar dos espaços.
@@ -142,7 +145,7 @@ bot.onText(/\/clima/, (msg, match) => {
   if (!cidade || cidade === undefined) {
     bot.sendMessage(
       chatId,
-      `Não achei essa cidade, ${nome}. Por favor digita /clima seguido da cidade que deseja.`
+      `Não achei essa cidade, ${nome}. Por favor digita /clima seguido da cidade que deseja. Suas coordenadas são ${latitude} / ${longitude}`
     );
     return;
   }
