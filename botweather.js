@@ -32,9 +32,9 @@ const bot = new TelegramBot(token, {
   polling: true
 });
 
-  bot.on('location', (msg) => {
-  latitude = msg.location.latitude;
-  longitude = msg.location.longitude;
+  bot.onText('Location', (msg) => {
+  latitude = msg.Location.latitude;
+  longitude = msg.Location.longitude;
 });
 
 //endpoint para consulta das condições em open weather map
