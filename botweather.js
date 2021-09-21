@@ -24,12 +24,18 @@ const axios = require('axios');
 const token = process.env.BOT_TOKEN;
 const appID = process.env.WEATHER_TOKEN;
 const prevToken = process.env.PREV_TOKEN;
+let latitude;
+let longitude/
 
 //inicialização do bot
 const bot = new TelegramBot(token, {
   polling: true
 });
 
+  bot.on('location', (msg) => {
+  latitude = msg.location.latitude;
+  longitude = msg.location.longitude;
+});
 
 //endpoint para consulta das condições em open weather map
 const climaEndPoint = (cidade) => (
@@ -58,6 +64,10 @@ const template = (name, main, weather, wind, clouds, coord, sys, timezone, dt) =
 🌎 Coordenadas: 
 ↕️  Latitude: <b>${coord.lat}</b>
 ↔️  Longitude: <b>${coord.lon}</b>
+
+🌎 Suas Coordenadas: 
+↕️  Latitude: <b>${latitude}</b>
+↔️  Longitude: <b>${longitude}</b>
 
 🚦 Última atualização: ${convertDt(dt)}
 🕖 Timezone: <b>GMT ${Number(timezone / 60 / 60)}</b> 
@@ -373,14 +383,11 @@ bot.onText(/\/st/, (msg) => {
 
   bot.sendMessage(msg.chat.id, "Welcome", {
     "reply_markup": {
-      "keyboard": [["/start", "/clima"], ["Keyboard"], ["I'm robot"]]
+      "keyboard": [["/start", "/clima"], ["Keyboard"], ["location"]]
     }
   });
   
-  bot.on('location', (msg) => {
-  console.log(msg.location.latitude);
-  console.log(msg.location.longitude);
-});
+
 
 });
 
